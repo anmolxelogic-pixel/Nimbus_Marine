@@ -20,19 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
 
-
-
 app.use("/api/user", userRoutes);
-
 
 app.use("/api/admin", adminRoute);
 
-
 app.use("/api/services", serviceRoutes);
 
-
-
 app.use("/api/home", homeRoute);
+
 app.use("/api/files", fileRoute)
 
 

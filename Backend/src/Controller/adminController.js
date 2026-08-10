@@ -9,26 +9,79 @@ const allUser = async (req, res) => {
                 email,
                 address,
                 phoneNumber,
-                role,
+                isActive,
                 created_at
             FROM users
             ORDER BY id DESC
         `);
+
         res.status(200).json(users);
-
     } catch (error) {
-
         console.error("Get users error:", error);
+
         res.status(500).json({
             message: "Failed to fetch users",
-            error: error.message
         });
-
     }
-
 };
 
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
 
+        const [result] = await db.execute(
+            "DELETE FROM users WHERE id = ?",
+            [id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        res.status(200).json({
+            message: "User deleted successfully",
+        });
+    } catch (error) {
+        console.error("Delete user error:", error);
+
+        res.status(500).json({
+            message: "Failed to delete user",
+        });
+    }
+};
+
+const updateUserStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { isActive } = req.body;
+
+        const [result] = await db.execute(
+            "UPDATE users SET isActive = ? WHERE id = ?",
+            [isActive, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        res.status(200).json({
+            message: `User ${
+                isActive ? "activated" : "deactivated"
+            } successfully`,
+            isActive,
+        });
+    } catch (error) {
+        console.error("Update user status error:", error);
+
+        res.status(500).json({
+            message: "Failed to update user status",
+        });
+    }
+};
 const getAdminServices = async (req, res) => {
 
     try {
@@ -49,7 +102,7 @@ const getAdminServices = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Get services error:",error);
+        console.error("Get services error:", error);
 
 
         res.status(500).json({
@@ -65,9 +118,9 @@ const addService = async (req, res) => {
 
     try {
 
-        const {title,description,icon} = req.body;
+        const { title, description, icon } = req.body;
 
-        console.log("Received service:",req.body);
+        console.log("Received service:", req.body);
 
         if (!title || !description) {
             return res.status(400).json({
@@ -75,7 +128,7 @@ const addService = async (req, res) => {
             });
         }
 
-        const [result] = await db.execute(`INSERT INTO services(title,description,icon)VALUES (?, ?, ?)`,[title,description,icon || null]);
+        const [result] = await db.execute(`INSERT INTO services(title,description,icon)VALUES (?, ?, ?)`, [title, description, icon || null]);
 
         res.status(201).json({
             message: "Service added successfully",
@@ -95,13 +148,12 @@ const addService = async (req, res) => {
         });
     }
 };
-
 const updateService = async (req, res) => {
 
     try {
         const { id } = req.params;
 
-        const {title,description,icon} = req.body;
+        const { title, description, icon } = req.body;
 
         if (!title || !description) {
             return res.status(400).json({
@@ -141,7 +193,7 @@ const updateService = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Update service error:",error);
+        console.error("Update service error:", error);
 
 
         res.status(500).json({
@@ -157,8 +209,7 @@ const deleteService = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const [result] = await db.execute(`DELETE FROM servicesWHERE id = ?`, [id]);
-
+        const [result] = await db.execute(`DELETE FROM services WHERE id = ?`, [id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({
@@ -171,7 +222,7 @@ const deleteService = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Delete service error:",error);
+        console.error("Delete service error:", error);
         res.status(500).json({
             message: "Failed to delete service",
             error: error.message
@@ -181,4 +232,4 @@ const deleteService = async (req, res) => {
 
 };
 
-export {allUser,getAdminServices, addService, updateService, deleteService};
+export { allUser, deleteUser,updateUserStatus,  getAdminServices, addService, updateService, deleteService };

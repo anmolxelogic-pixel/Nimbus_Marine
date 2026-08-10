@@ -2,49 +2,58 @@ import db from "../db/sqldb.js";
 import bcrypt from "bcrypt";
 import generateToken from "../utils/generateToken.js";
 
-const ALLOWED_ROLES = ["user", "admin"];
-
 const registerUser = async (req, res) => {
-
     try {
-        const { fullname, email, password, address, phoneNumber, role } = req.body;
+        const {
+            fullname,
+            email,
+            password,
+            address,
+            phoneNumber,
+        } = req.body;
 
-        if (!fullname || !email || !password || !address || !phoneNumber) {
+        if (
+            !fullname ||
+            !email ||
+            !password ||
+            !address ||
+            !phoneNumber
+        ) {
             return res.status(400).json({
-                message: "All fields are required"
-            });
-        }
-
-        const selectedRole = role || "user";
-
-        if (!ALLOWED_ROLES.includes(selectedRole)) {
-            return res.status(400).json({
-                message: "Invalid role"
+                message: "All fields are required",
             });
         }
 
         const [rows] = await db.execute(
-            "SELECT * FROM users WHERE email=?",
+            "SELECT id FROM users WHERE email = ?",
             [email]
         );
 
         if (rows.length > 0) {
             return res.status(400).json({
-                message: "User already exists"
+                message: "User already exists",
             });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const [result] = await db.execute(
-            `INSERT INTO users( fullname, email, password, address, phoneNumber, role)
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [fullname, email, hashedPassword, address, phoneNumber, selectedRole]);
+            `INSERT INTO users
+            (fullname, email, password, address, phoneNumber)
+            VALUES (?, ?, ?, ?, ?)`,
+            [
+                fullname,
+                email,
+                hashedPassword,
+                address,
+                phoneNumber,
+            ]
+        );
 
-        const token = generateToken(result.insertId, selectedRole);
+        const token = generateToken(result.insertId, "user");
 
-        return res.status(201).json({
-            message: `${selectedRole === "admin" ? "Admin" : "User"} Registered Successfully`,
+        res.status(201).json({
+            message: "User registered successfully",
             token,
             user: {
                 id: result.insertId,
@@ -52,50 +61,46 @@ const registerUser = async (req, res) => {
                 email,
                 address,
                 phoneNumber,
-                role: selectedRole
-            }
+                isActive: true,
+            },
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: "Server Error"
-        });
+        console.error("Register error:", error);
 
+        res.status(500).json({
+            message: "Server error",
+        });
     }
 };
 
 const loginUser = async (req, res) => {
-
     try {
-
-        const { email, password, role } = req.body;
+        const { email, password } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({
-                message: "Email and password are required"
-            });
-        }
-
-        const selectedRole = role || "user";
-
-        if (!ALLOWED_ROLES.includes(selectedRole)) {
-            return res.status(400).json({
-                message: "Invalid role"
+                message: "Email and password are required",
             });
         }
 
         const [rows] = await db.execute(
-            "SELECT * FROM users WHERE email=? AND role=?",
-            [email, selectedRole]
+            "SELECT * FROM users WHERE email = ?",
+            [email]
         );
 
         if (rows.length === 0) {
             return res.status(404).json({
-                message: `No ${selectedRole} account found with this email`
+                message: "User not found",
             });
         }
 
         const user = rows[0];
+
+        if (!user.isActive) {
+            return res.status(403).json({
+                message: "Your account has been deactivated by admin",
+            });
+        }
 
         const isMatch = await bcrypt.compare(
             password,
@@ -104,14 +109,14 @@ const loginUser = async (req, res) => {
 
         if (!isMatch) {
             return res.status(401).json({
-                message: "Invalid Credentials"
+                message: "Invalid credentials",
             });
         }
 
-        const token = generateToken(user.id, user.role);
+        const token = generateToken(user.id, "user");
 
         res.status(200).json({
-            message: "Login Successful",
+            message: "Login successful",
             token,
             user: {
                 id: user.id,
@@ -119,35 +124,15 @@ const loginUser = async (req, res) => {
                 email: user.email,
                 address: user.address,
                 phoneNumber: user.phoneNumber,
-                role: user.role
-            }
+                isActive: user.isActive,
+            },
         });
     } catch (error) {
-        console.log(error);
+        console.error("Login error:", error);
+
         res.status(500).json({
-            message: "Server Error"
+            message: "Server error",
         });
-    }
-};
-
-
-const getAllUsers = async (req, res) => {
-    try {
-        const [users] = await db.execute(`
-            SELECT
-                id,
-                fullname,
-                email,
-                address,
-                phoneNumber,
-                role,
-                created_at
-            FROM users
-        `);
-
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
     }
 };
 
@@ -155,22 +140,36 @@ const getSingleUser = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const [user] = await db.execute(
-            "SELECT id, fullname, email, address, phoneNumber, role, created_at FROM users WHERE id = ?",
+        const [users] = await db.execute(
+            `SELECT
+                id,
+                fullname,
+                email,
+                address,
+                phoneNumber,
+                isActive,
+                created_at
+            FROM users
+            WHERE id = ?`,
             [id]
         );
 
-        if (user.length === 0) {
+        if (users.length === 0) {
             return res.status(404).json({
-                message: "User not found"
+                message: "User not found",
             });
         }
 
-        res.status(200).json(user[0]);
+        res.status(200).json(users[0]);
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: error.message,
         });
     }
 };
-export { registerUser, loginUser, getAllUsers, getSingleUser };
+
+export {
+    registerUser,
+    loginUser,
+    getSingleUser,
+};

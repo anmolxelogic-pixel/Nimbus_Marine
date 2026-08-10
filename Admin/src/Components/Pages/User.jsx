@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { MdDeleteOutline } from "react-icons/md";
 import api from "../../api/axios";
 
 function User() {
@@ -8,6 +9,7 @@ function User() {
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deletingID, setDeletingId] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -21,6 +23,22 @@ function User() {
       toast.error(error.response?.data?.message || "Failed to load users");
     } finally {
       setLoading(false);
+    }
+  }
+  async function handleDelete(userId) {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmDelete)
+      return;
+    try {
+      setDeletingId(userId);
+      await api.delete(`/user/${userId}`);
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      toast.success("User deleted successfully");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to delete user");
+
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -56,6 +74,8 @@ function User() {
                   <th className="px-4 py-3 text-left">Address</th>
                   <th className="px-4 py-3 text-left">Phone</th>
                   <th className="px-4 py-3 text-left">Created At</th>
+                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="px-4 py-3 text-left">Delete</th>
                 </tr>
               </thead>
 
@@ -75,11 +95,13 @@ function User() {
                       <td className="px-4 py-3">{user.id}</td>
                       <td className="px-4 py-3 font-medium">{user.fullname}</td>
                       <td className="px-4 py-3">{user.email}</td>
-                      
                       <td className="px-4 py-3">{user.address}</td>
-                      <td className="px-4 py-3">{user.phoneNumber}</td>
+                      <td className="px-4 py-3">{user.phoneNumber}</td> 
                       <td className="px-4 py-3">
                         {new Date(user.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="px-3 py-1 bg-red-100 text-red-600 rounded"></td>
+                      <td onClick={() => { handleDelete(user.id) }} className="px-4 py-3 cursor-pointer"><MdDeleteOutline />
                       </td>
                     </tr>
                   ))

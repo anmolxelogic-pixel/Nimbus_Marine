@@ -13,14 +13,12 @@ function Home() {
   const { user } = useSelector((state) => state.auth);
 
   const [homeData, setHomeData] = useState(null);
-
   const [loading, setLoading] = useState(true);
+  const [heroImage, setHeroImage] = useState("");
 
   const fetchHomeContent = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/home"
-      );
+      const response = await axios.get("http://localhost:8000/api/home");
 
       console.log("Home content from backend:", response.data);
 
@@ -35,8 +33,25 @@ function Home() {
     }
   };
 
+  const fetchImage = async()=>{
+    try {
+     const response = await axios.get("http://localhost:8000/api/files");
+
+      console.log("Image content from backend:", response.data);
+
+      if (response.data.success) {
+        setHeroImage(response.data.data);
+      }
+
+       
+    } catch (error) {
+      
+    }
+  }
+
   useEffect(() => {
-    fetchHomeContent();
+    fetchHomeContent(),
+    fetchImage()
   }, []);
 
   const handleLogout = () => {
@@ -96,7 +111,7 @@ function Home() {
 
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-y-2">
+            <div className="mt-12 flex flex-wrap items-center gap-3 gap-y-2">
 
               <div className="flex items-center gap-3">
 
@@ -119,7 +134,7 @@ function Home() {
 
               <div className="flex items-center gap-3">
 
-                <div className="flex h-14 w-14 items-center justify-center text-2xl font-bold text-orange-500">
+                <div className="flex h-14 w-14 items-center rounded-full border-4 justify-center text-2xl font-bold text-orange-500">
                   ISO
                 </div>
 
