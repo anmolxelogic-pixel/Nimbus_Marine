@@ -78,10 +78,8 @@ function AdminDashboard() {
 
 
     return (
-        <div className="flex h-screen">
-
-
-            <aside className="w-90 bg-gray-300  text-black">
+        <div className="flex">
+            <aside className="w-70 bg-gray-300  text-black">
 
                 <div className="text-3xl font-bold p-6 border-b border-gray-700">
                     Admin Panel

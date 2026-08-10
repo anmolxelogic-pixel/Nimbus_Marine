@@ -11,9 +11,7 @@ const db = await mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
 });
-
 console.log("MySQL Connected Successfully");
-
 
 await db.execute(`
     CREATE TABLE IF NOT EXISTS users (
@@ -27,9 +25,7 @@ await db.execute(`
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 `);
-
 console.log("Users Table Ready");
-
 
 await db.execute(`
     CREATE TABLE IF NOT EXISTS services (
@@ -40,9 +36,7 @@ await db.execute(`
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 `);
-
 console.log("Services Table Ready");
-
 
 await db.execute(`
   CREATE TABLE IF NOT EXISTS home_text (
@@ -72,8 +66,8 @@ console.log("Home Text Table Ready");
 await db.execute(`
     CREATE TABLE IF NOT EXISTS files (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    original_name VARCHAR(255) NOT NULL,
-    file_name VARCHAR(255) NOT NULL,
+    originalname VARCHAR(255) NOT NULL,
+    filename VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );`)
 console.log("upload File Ready");

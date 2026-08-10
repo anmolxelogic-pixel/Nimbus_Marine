@@ -63,7 +63,7 @@ function Home() {
   return (
     <>
       <section
-        className="relative min-h-[700px] w-full bg-cover bg-center bg-no-repeat"
+        className="relative min-h-[700px] w-full  lg:grid-cols-3 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${hero})` }}
       >
 

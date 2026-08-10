@@ -33,7 +33,7 @@ app.use("/api/services", serviceRoutes);
 
 
 app.use("/api/home", homeRoute);
-app.use("api/file", fileRoute)
+app.use("/api/files", fileRoute)
 
 
 app.get("/", (req, res) => {

@@ -5,9 +5,6 @@ import {allUser,getAdminServices,addService,updateService,deleteService} from ".
 
 const router = express.Router();
 
-
-
-
 router.get("/data",allUser);
 
 

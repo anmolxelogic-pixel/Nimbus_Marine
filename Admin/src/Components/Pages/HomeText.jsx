@@ -17,6 +17,7 @@ function HomeText() {
 
   // const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [file, setFile] = useState([])
 
   const fetchHomeContent = async () => {
     try {
@@ -37,12 +38,14 @@ function HomeText() {
     // }
   };
 
-  
+
+
+
   useEffect(() => {
     fetchHomeContent();
   }, []);
 
-  
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -50,7 +53,7 @@ function HomeText() {
     });
   };
 
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -72,14 +75,12 @@ function HomeText() {
 
       alert(
         error.response?.data?.message ||
-          "Failed to update homepage content"
+        "Failed to update homepage content"
       );
     } finally {
       setSaving(false);
     }
   };
-
-  
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -92,6 +93,7 @@ function HomeText() {
         <p className="mt-2 text-gray-500">
           Update the text displayed on your website homepage.
         </p>
+
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -101,6 +103,7 @@ function HomeText() {
           <h2 className="mb-6 text-xl font-bold text-gray-800">
             Homepage Content
           </h2>
+
 
           <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -275,74 +278,158 @@ function HomeText() {
         </div>
 
 
-        {/* <div className="rounded-xl bg-white p-6 shadow-sm">
+        <div className="grid grid-cols-1 gap-6">
 
-          <h2 className="mb-5 text-xl font-bold text-gray-800">
-            Content Preview
-          </h2>
 
-          <div className="rounded-lg bg-gray-900 p-6">
+          <div className="rounded-xl bg-white p-6 shadow-sm">
 
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-orange-500">
-              Homepage Hero
+            <h2 className="mb-2 text-xl font-bold text-gray-800">
+              File Upload
+            </h2>
+
+            <p className="mb-5 text-sm text-gray-500">
+              Upload a banner image for the homepage hero section.
             </p>
 
-            <h3 className="text-2xl font-extrabold leading-tight text-white">
-              {formData.heading}
-            </h3>
+            <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
 
-            <p className="mt-4 text-sm leading-6 text-gray-300">
-              {formData.subtitle}
-            </p>
+              <label className="mb-2 block text-sm font-semibold text-gray-700">
+                Banner Image
+              </label>
 
-            <div className="mt-5 flex flex-wrap gap-2">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
 
-              <span className="rounded bg-orange-500 px-3 py-2 text-xs font-semibold text-white">
-                {formData.primaryButton}
-              </span>
+                {/* File Input */}
+                <label className="flex-1 cursor-pointer rounded-lg border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-500 transition hover:border-orange-500 hover:text-orange-500">
 
-              <span className="rounded bg-orange-500 px-3 py-2 text-xs font-semibold text-white">
-                {formData.secondaryButton}
-              </span>
+                  <div className="flex items-center gap-3">
+
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-orange-500">
+                      📁
+                    </div>
+
+                    <div>
+                      <p className="font-medium text-gray-700">
+                        Choose banner image
+                      </p>
+
+                      <p className="text-xs text-gray-400">
+                        PNG, JPG or WEBP
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    className="hidden"
+                    onChange={(e) => setFile(e.target.files)}
+                  />
+
+                </label>
+
+                {/* Add Banner Button */}
+                <button
+                  type="button"
+                  className="rounded-lg bg-orange-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                >
+                  Add Banner
+                </button>
+
+              </div>
+
+              {/* Selected File */}
+              {file?.length > 0 && (
+                <div className="mt-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3">
+
+                  <p className="text-sm font-medium text-green-700">
+                    Selected file
+                  </p>
+
+                  <p className="mt-1 truncate text-xs text-green-600">
+                    {file[0]?.name}
+                  </p>
+
+                </div>
+              )}
 
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-3 border-t border-gray-700 pt-5">
+          </div>
 
-              <div>
-                <p className="text-xl font-bold text-white">
-                  {formData.experienceNumber}
-                </p>
 
-                <p className="mt-1 text-xs text-gray-400">
-                  {formData.experienceText}
-                </p>
+          <div className="rounded-xl bg-white p-6 shadow-sm">
+
+            <h2 className="mb-5 text-xl font-bold text-gray-800">
+              Content Preview
+            </h2>
+
+            <div className="rounded-lg bg-gray-600 p-6">
+
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-orange-500">
+                Homepage Hero
+              </p>
+
+              <h3 className="text-2xl font-extrabold leading-tight text-white">
+                {formData.heading || "Your homepage heading"}
+              </h3>
+
+              <p className="mt-4 text-sm leading-6 text-gray-300">
+                {formData.subtitle || "Your homepage subtitle will appear here."}
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+
+                <span className="rounded bg-orange-500 px-3 py-2 text-xs font-semibold text-white">
+                  {formData.primaryButton || "Primary Button"}
+                </span>
+
+                <span className="rounded border border-gray-600 px-3 py-2 text-xs font-semibold text-gray-300">
+                  {formData.secondaryButton || "Secondary Button"}
+                </span>
+
               </div>
 
-              <div>
-                <p className="text-xl font-bold text-white">
-                  {formData.isoNumber}
-                </p>
+              <div className="mt-8 grid grid-cols-3 gap-3 border-t border-gray-700 pt-5">
 
-                <p className="mt-1 text-xs text-gray-400">
-                  {formData.isoText}
-                </p>
-              </div>
+                <div>
+                  <p className="text-xl font-bold text-white">
+                    {formData.experienceNumber || "0"}
+                  </p>
 
-              <div>
-                <p className="text-xl font-bold text-white">
-                  {formData.countriesNumber}
-                </p>
+                  <p className="mt-1 text-xs text-gray-400">
+                    {formData.experienceText || "Experience"}
+                  </p>
+                </div>
 
-                <p className="mt-1 text-xs text-gray-400">
-                  {formData.countriesText}
-                </p>
+                <div>
+                  <p className="text-xl font-bold text-white">
+                    {formData.isoNumber || "0"}
+                  </p>
+
+                  <p className="mt-1 text-xs text-gray-400">
+                    {formData.isoText || "ISO"}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-xl font-bold text-white">
+                    {formData.countriesNumber || "0"}
+                  </p>
+
+                  <p className="mt-1 text-xs text-gray-400">
+                    {formData.countriesText || "Countries"}
+                  </p>
+                </div>
+
               </div>
 
             </div>
 
           </div>
-        </div> */}
+
+        </div>
 
       </div>
     </div>
