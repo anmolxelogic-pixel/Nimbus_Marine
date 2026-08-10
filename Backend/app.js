@@ -5,30 +5,35 @@ import userRoutes from "./src/routes/userRoutes.js";
 import adminRoute from "./src/routes/adminRoute.js";
 import serviceRoutes from "./src/routes/serviceRoute.js";
 import homeRoute from "./src/routes/homeRoute.js";
+import fileRoute from './src/routes/fileRoutes.js'
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
-
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static("uploads"));
 
 
-// User
+
+
 app.use("/api/user", userRoutes);
 
 
-// Admin
 app.use("/api/admin", adminRoute);
 
 
-// Services
 app.use("/api/services", serviceRoutes);
 
 
-// Homepage
+
 app.use("/api/home", homeRoute);
+app.use("api/file", fileRoute)
 
 
 app.get("/", (req, res) => {

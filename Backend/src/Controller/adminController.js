@@ -70,30 +70,12 @@ const addService = async (req, res) => {
         console.log("Received service:",req.body);
 
         if (!title || !description) {
-
             return res.status(400).json({
                 message: "Title and description are required"
             });
-
         }
 
-
-        const [result] = await db.execute(
-            `
-            INSERT INTO services
-            (
-                title,
-                description,
-                icon
-            )
-            VALUES (?, ?, ?)
-            `,
-            [
-                title,
-                description,
-                icon || null
-            ]
-        );
+        const [result] = await db.execute(`INSERT INTO services(title,description,icon)VALUES (?, ?, ?)`,[title,description,icon || null]);
 
         res.status(201).json({
             message: "Service added successfully",
@@ -103,14 +85,10 @@ const addService = async (req, res) => {
                 description,
                 icon: icon || null
             }
-
         });
 
     } catch (error) {
-
         console.error("Add service error:", error);
-
-
         res.status(500).json({
             message: "Failed to add service",
             error: error.message

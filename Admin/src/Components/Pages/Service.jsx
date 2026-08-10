@@ -171,20 +171,9 @@ function Service() {
 
     const handleChange = (e) => {
 
-        const {
-            name,
-            value
-        } = e.target;
+        const {name,value} = e.target;
 
-
-        setFormData((prev) => ({
-
-            ...prev,
-
-            [name]: value,
-
-        }));
-
+        setFormData((prev) => ({...prev,[name]: value,}));
     };
 
     const handleSubmit = async (e) => {
@@ -202,7 +191,6 @@ function Service() {
         try {
 
             if (editingService) {
-
                 const response = await axios.put(
 
                     `${API_URL}/${editingService.id}`,
@@ -263,205 +251,55 @@ function Service() {
             await axios.delete(
                 `${API_URL}/${id}`
             );
-            alert(
-                "Service deleted successfully!"
-            );
-
+            alert("Service deleted successfully!");
             await fetchServices();
         } catch (error) {
-
-            console.error(
-                "Delete service error:",
-                error
-            );
-
-
-            alert(
-
-                error.response?.data?.message ||
-
-                "Failed to delete service"
-
-            );
-
+            console.error("Delete service error:",error);
+            alert("Failed to delete service");
         }
 
     };
 
     if (loading) {
-
         return (
-
-            <div
-                className="
-                    min-h-screen
-                    flex
-                    items-center
-                    justify-center
-                    bg-[#f8fafc]
-                "
-            >
-
+            <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
                 <p className="text-slate-600">
-
                     Loading services...
-
                 </p>
-
             </div>
 
         );
-
     }
 
 
     return (
 
-        <div
-            className="
-                min-h-screen
-                bg-[#f8fafc]
-                p-4
-                md:p-8
-            "
-        >
-
-            <div
-                className="mx-auto max-w-[1400px]">
+        <div className="min-h-screen bg-[#f8fafc] p-4 md:p-8">
+            <div className="mx-auto max-w-[1400px]">
                 <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <h1
-                            className="
-                                text-2xl
-                                font-bold
-                                text-slate-900
-                            "
-                        >
-                            Services Editor
-                        </h1>
-
-
-                        <p
-                            className="
-                                mt-1
-                                text-sm
-                                text-slate-500
-                            "
-                        >
-                            Manage your website services
-                        </p>
+                        <h1 className="text-2xl font-bold text-slate-900">Services Editor</h1>
+                        <p className="mt-1 text-sm text-slate-500"> Manage your website services</p>
 
                     </div>
 
-
-                    {/* Statistics */}
-
-                    <div
-                        className="
-                            flex
-                            flex-wrap
-                            gap-2
-                        "
-                    >
-
-                        <div
-                            className="
-                                rounded-xl
-                                border
-                                border-slate-200
-                                bg-white
-                                px-4
-                                py-2
-                                shadow-sm
-                            "
-                        >
-
-                            <span
-                                className="
-                                    text-xs
-                                    text-slate-500
-                                "
-                            >
-                                Total
-                            </span>
-
-
-                            <span
-                                className="
-                                    ml-2
-                                    font-semibold
-                                    text-slate-900
-                                "
-                            >
-                                {totalServices}
-                            </span>
-
+                    <div className="flex flex-wrap gap-2">
+                        <div className="rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
+                            <span className="text-xs text-slate-500">Total</span>
+                            <span className="ml-2 font-semibold text-slate-900">{totalServices}</span>
                         </div>
 
 
-                        <div
-                            className="
-                                rounded-xl
-                                border
-                                border-slate-200
-                                bg-white
-                                px-4
-                                py-2
-                                shadow-sm
-                            "
-                        >
-
-                            <span
-                                className="
-                                    text-xs
-                                    text-slate-500
-                                "
-                            >
-                                Active
-                            </span>
-
-
-                            <span
-                                className="
-                                    ml-2
-                                    font-semibold
-                                    text-emerald-500
-                                "
-                            >
-                                {activeServices}
-                            </span>
-
+                        <div className="rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
+                            <span className="text-xs text-slate-500">Active</span>
+                            <span sclassName="ml-2 font-semibold text-emerald-500">{activeServices}</span>
                         </div>
 
-
-                        <div
-                            className="
-                                rounded-xl
-                                border
-                                border-slate-200
-                                bg-white
-                                px-4
-                                py-2
-                                shadow-sm
-                            "
-                        >
-
-                            <span
-                                className="
-                                    text-xs
-                                    text-slate-500
-                                "
-                            >
-                                Inactive
-                            </span>
-
-
+                        <div className="rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
+                            <span className="text-xs text-slate-500">Inactive</span>
                             <span className="ml-2 font-semibold text-red-500">{inactiveServices}</span>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -471,63 +309,30 @@ function Service() {
                             <h2 className="font-semibold text-slate-900">Service List</h2>
                             <p className="mt-1 text-xs text-slate-500"> Manage services stored in database</p>
                         </div>
-
                         <button onClick={handleAddService} className="rounded-lg bg-slate-900 px-4 py-2.5  text-sm  font-medium  text-white  transition hover:bg-slate-800">+ Add New Service</button>
-
                     </div>
 
+                     {/* serach box */}
                     <div className="border-b border-slate-200 p-4 ">
-
-                        <input type="text" placeholder="Search services..." value={search} onChange={(e) =>setSearch(e.target.value)}
-                            className=" w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-slate-400 focus:bg-white"/>
-
-                    </div>
+                        {/* <input type="text" placeholder="Search services..." value={search} onChange={(e) =>setSearch(e.target.value)}
+                            className=" w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-slate-400 focus:bg-white"/> */}
+                    </div> 
 
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[900px]">
                             <thead>
                                 <tr className="bg-slate-50 text-left">
-                                    <th
-                                        className="
-                                            w-14
-                                            px-5
-                                            py-3
-                                            text-xs
-                                            font-semibold
-                                            uppercase
-                                            text-slate-500
-                                        "
-                                    >
-                                        #
-                                    </th>
-
-
-                                    <th className="w-24 px-3 py-3 text-xs font-semibold uppercase text-slate-500">
-                                        Icon
-                                    </th>
-
-
-                                    <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-500">
-                                        Title
-                                    </th>
-
-
-                                    <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-500">
-                                        Description
-                                    </th>
-
-
+                                    <th className=" w-14 px-5 py-3 text-xs font-semibold uppercase text-slate-500">NO.</th>
+                                    <th className="w-24 px-3 py-3 text-xs font-semibold uppercase text-slate-500">Icon</th>
+                                    <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-500">Title</th>
+                                    <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-500">Description</th>
                                     <th className="w-40 px-3 py-3 text-xs font-semibold uppercase text-slate-500">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
                                 {filteredServices.length === 0 ? (
-
                                     <tr>
-                                        <td colSpan="5" className="px-5 py-12 text-center text-sm text-slate-500">
-                                            No services found.
-                                        </td>
-
+                                        <td colSpan="5" className="px-5 py-12 text-center text-sm text-slate-500">No services found.</td>
                                     </tr>
 
                                 ) : (
@@ -535,52 +340,25 @@ function Service() {
                                     filteredServices.map(
                                         (service, index) => (
                                             <tr key={service.id} className=" group transition hover:bg-slate-50/70">
-
-                                                <td className="px-5 py-4 text-sm text-slate-500">
-                                                    {index + 1}
-                                                </td>
-
+                                                <td className="px-5 py-4 text-sm text-slate-500">{index + 1}</td>
                                                 <td className="px-3 py-4">
-
-                                                    <div
-                                                        className="
-                                                            flex
-                                                            h-14
-                                                            w-14
-                                                            items-center
-                                                            justify-center
-                                                            rounded-xl
-                                                            border
-                                                            border-slate-200
-                                                            bg-slate-50
-                                                            text-2xl
-                                                            text-orange-500
-                                                        "
-                                                    >
-
+                                                    <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-2xl text-orange-500">
                                                         {iconMap[service.icon] || <FaAnchor />}
-
                                                     </div>
 
                                                 </td>
 
                                                 <td className="px-3 py-4">
-
-                                                    <div className="max-w-[250px]font-medium text-slate-800">
-                                                        {service.title}
-                                                    </div>
-
+                                                    <div className="max-w-[250px]font-medium text-slate-800">{service.title}</div>
                                                 </td>
 
                                                 <td className="px-3 py-4">
                                                     <div className="max-w-[500px] text-sm leading-6 text-slate-600">
                                                         {service.description}
                                                     </div>
-
                                                 </td>
 
                                                 <td className="px-3 py-4">
-
                                                     <div className="flex items-center gap-2">
 
                                                         <button onClick={() =>handleEditService(service)}

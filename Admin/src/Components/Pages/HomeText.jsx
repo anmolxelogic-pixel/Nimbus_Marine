@@ -15,7 +15,7 @@ function HomeText() {
     countriesText: "",
   });
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   const fetchHomeContent = async () => {
@@ -31,9 +31,10 @@ function HomeText() {
       console.error("Error fetching homepage content:", error);
 
       alert("Failed to load homepage content");
-    } finally {
-      setLoading(false);
     }
+    // finally {
+    //   setLoading(false);
+    // }
   };
 
   
@@ -78,15 +79,7 @@ function HomeText() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <p className="text-lg font-semibold text-gray-700">
-          Loading homepage content...
-        </p>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -280,9 +273,9 @@ function HomeText() {
 
           </form>
         </div>
-        
 
-        <div className="rounded-xl bg-white p-6 shadow-sm">
+
+        {/* <div className="rounded-xl bg-white p-6 shadow-sm">
 
           <h2 className="mb-5 text-xl font-bold text-gray-800">
             Content Preview
@@ -349,7 +342,7 @@ function HomeText() {
             </div>
 
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>

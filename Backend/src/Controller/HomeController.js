@@ -29,7 +29,6 @@ const getHomeContent = async (req, res) => {
   }
 };
 
-
 const updateHomeContent = async (req, res) => {
   try {
 
@@ -52,7 +51,6 @@ const updateHomeContent = async (req, res) => {
     );
 
 
-    // If homepage content doesn't exist yet
     if (rows.length === 0) {
 
       const [result] = await db.execute(
@@ -99,7 +97,6 @@ const updateHomeContent = async (req, res) => {
     }
 
 
-    // If homepage content already exists
     const id = rows[0].id;
 
 
@@ -148,7 +145,6 @@ const updateHomeContent = async (req, res) => {
   } catch (error) {
 
     console.error("Update home content error:", error);
-
     res.status(500).json({
       success: false,
       message: "Server error",

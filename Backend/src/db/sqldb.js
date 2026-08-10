@@ -67,7 +67,15 @@ await db.execute(`
       ON UPDATE CURRENT_TIMESTAMP
   )
 `);
-
 console.log("Home Text Table Ready");
+
+await db.execute(`
+    CREATE TABLE IF NOT EXISTS files (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    original_name VARCHAR(255) NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);`)
+console.log("upload File Ready");
 
 export default db;
