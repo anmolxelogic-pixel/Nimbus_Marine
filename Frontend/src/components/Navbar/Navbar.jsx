@@ -25,43 +25,17 @@ function Navbar() {
   };
 
   const linkClass = ({ isActive }) =>
-    `px-3 py-2 text-base font-medium transition duration-300 ${
-      isActive
-        ? "text-orange-500"
-        : "text-gray-800 hover:text-orange-500"
+    `px-3 py-2 text-base font-medium transition duration-300 ${isActive
+      ? "text-orange-500"
+      : "text-gray-800 hover:text-orange-500"
     }`;
 
   const navLinks = [
-    {
-      name: "Home",
-      path: "/home",
-      roles: ["user", "admin"],
-    },
-    {
-      name: "About",
-      path: "/about",
-      roles: ["user", "admin"],
-    },
-    {
-      name: "Locations",
-      path: "/locations",
-      roles: ["user", "admin"],
-    },
-    {
-      name: "Contact",
-      path: "/contact",
-      roles: ["user", "admin"],
-    },
-    {
-      name: "Career",
-      path: "/career",
-      roles: ["user", "admin"],
-    },
-    {
-      name: "Profile",
-      path: "/dashboard",
-      roles: ["user"],
-    },
+    { name: "Home", path: "/home", roles: ["user", "admin"], },
+    { name: "About", path: "/about", roles: ["user", "admin"], },
+    { name: "Locations", path: "/locations", roles: ["user", "admin"], },
+    { name: "Contact", path: "/contact", roles: ["user", "admin"] },
+    { name: "Career", path: "/career", roles: ["user", "admin"], },
   ];
 
   const services = [
@@ -98,44 +72,21 @@ function Navbar() {
     <nav className="w-full border-b border-gray-200 bg-white shadow-sm">
       <div className="mx-auto flex min-h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-        <Link
-          to="/home"
-          onClick={() => setMobileMenu(false)}
-          className="flex shrink-0 items-center"
-        >
-          <img
-            src={logo2}
-            alt="Logo"
-            className="h-10 w-auto object-contain sm:h-12"
-          />
+        <Link to="/home" onClick={() => setMobileMenu(false)} className="flex shrink-0 items-center">
+          <img src={logo2} alt="Logo" className="h-10 w-auto object-contain sm:h-12" />
         </Link>
 
         <div className="hidden items-center lg:flex">
-
-          {token ? (
+          
             <div className="flex items-center gap-1">
-
-              {navLinks
-                .filter((item) => item.roles.includes(role))
-                .map((item) => (
-                  <NavLink
-                    key={item.path}
-                    to={item.path}
-                    className={linkClass}
-                  >
+              {navLinks.map((item) => (
+                  <NavLink key={item.path} to={item.path} className={linkClass}>
                     {item.name}
                   </NavLink>
                 ))}
 
-              <div
-                className="relative"
-                onMouseEnter={() => setDropOne(true)}
-                onMouseLeave={() => setDropOne(false)}
-              >
-                <button
-                  type="button"
-                  className="flex items-center gap-1 px-3 py-2 text-base font-medium text-gray-800 transition hover:text-orange-500"
-                >
+              <div className="relative" onMouseEnter={() => setDropOne(true)} onMouseLeave={() => setDropOne(false)}>
+                <button type="button" className="flex items-center gap-1 px-3 py-2 text-base font-medium text-gray-800 transition hover:text-orange-500">
                   Services
                   <FiChevronDown size={16} />
                 </button>
@@ -204,14 +155,8 @@ function Navbar() {
                 Logout
               </button>
             </div>
-          ) : (
-            <NavLink
-              to="/login"
-              className="rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600"
-            >
-              Login
-            </NavLink>
-          )}
+          
+          
         </div>
 
         <button
@@ -238,10 +183,9 @@ function Navbar() {
                     to={item.path}
                     onClick={() => setMobileMenu(false)}
                     className={({ isActive }) =>
-                      `border-b border-gray-100 px-3 py-3 text-base font-medium ${
-                        isActive
-                          ? "text-orange-500"
-                          : "text-gray-800"
+                      `border-b border-gray-100 px-3 py-3 text-base font-medium ${isActive
+                        ? "text-orange-500"
+                        : "text-gray-800"
                       }`
                     }
                   >
@@ -260,9 +204,8 @@ function Navbar() {
 
                   <FiChevronDown
                     size={18}
-                    className={`transition ${
-                      dropOne ? "rotate-180" : ""
-                    }`}
+                    className={`transition ${dropOne ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
@@ -295,9 +238,8 @@ function Navbar() {
 
                   <FiChevronDown
                     size={18}
-                    className={`transition ${
-                      dropTwo ? "rotate-180" : ""
-                    }`}
+                    className={`transition ${dropTwo ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
@@ -320,30 +262,18 @@ function Navbar() {
               </div>
 
               <div className="mt-4 flex items-center gap-3 rounded-lg bg-gray-50 p-4">
-
-                <Link
-                  to="/dashboard"
-                  onClick={() => setMobileMenu(false)}
-                  className="text-gray-700"
-                >
+                <Link to="/dashboard" onClick={() => setMobileMenu(false)} className="text-gray-700" >
                   <CgProfile size={28} />
                 </Link>
 
                 <div className="min-w-0">
-                  <p className="text-xs text-gray-500">
-                    Logged in as
-                  </p>
-
-                  <p className="truncate font-semibold text-gray-800">
-                    {user?.fullname}
-                  </p>
+                  <p className="text-xs text-gray-500"> Logged in as</p>
+                  <p className="truncate font-semibold text-gray-800"> {user?.fullname}</p>
                 </div>
 
               </div>
 
-              <button
-                onClick={handleLogout}
-                type="button"
+              <button onClick={handleLogout} type="button"
                 className="mt-3 w-full rounded-lg border border-gray-200 px-4 py-3 text-left font-medium text-gray-700 transition hover:bg-orange-50 hover:text-orange-500"
               >
                 Logout
@@ -351,11 +281,7 @@ function Navbar() {
 
             </div>
           ) : (
-            <NavLink
-              to="/login"
-              onClick={() => setMobileMenu(false)}
-              className="block w-full rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600"
-            >
+            <NavLink to="/login" onClick={() => setMobileMenu(false)} className="block w-full rounded-lg bg-orange-500 px-5 py-3 text-center font-semibold text-white hover:bg-orange-600">
               Login
             </NavLink>
           )}

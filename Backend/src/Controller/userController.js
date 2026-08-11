@@ -4,21 +4,9 @@ import generateToken from "../utils/generateToken.js";
 
 const registerUser = async (req, res) => {
     try {
-        const {
-            fullname,
-            email,
-            password,
-            address,
-            phoneNumber,
-        } = req.body;
+        const {fullname,email,password,address,phoneNumber} = req.body;
 
-        if (
-            !fullname ||
-            !email ||
-            !password ||
-            !address ||
-            !phoneNumber
-        ) {
+        if (!fullname ||!email ||!password ||!address ||!phoneNumber) {
             return res.status(400).json({
                 message: "All fields are required",
             });
@@ -139,7 +127,6 @@ const loginUser = async (req, res) => {
 const getSingleUser = async (req, res) => {
     try {
         const { id } = req.params;
-
         const [users] = await db.execute(
             `SELECT
                 id,

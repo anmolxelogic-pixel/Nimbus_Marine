@@ -6,6 +6,7 @@ import adminRoute from "./src/routes/adminRoute.js";
 import serviceRoutes from "./src/routes/serviceRoute.js";
 import homeRoute from "./src/routes/homeRoute.js";
 import fileRoute from './src/routes/fileRoutes.js'
+import adminAuthRoute from "./src/routes/adminAuthRoute.js";
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -23,6 +24,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/user", userRoutes);
 
 app.use("/api/admin", adminRoute);
+
 
 app.use("/api/services", serviceRoutes);
 

@@ -82,4 +82,8 @@ await db.execute(`
 
 console.log("Upload File Ready");
 
+await db.execute(`
+    ALTER IMAGE 
+    `)
+
 export default db;

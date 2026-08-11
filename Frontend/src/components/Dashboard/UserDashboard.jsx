@@ -7,21 +7,21 @@ function UserDashboard() {
   const [data, setData] = useState([]);
 
   const userId = authUser?.id || localStorage.getItem("userId");
-
-  useEffect(() => {
-    fetchUser();
-  }, [userId]);
+  console.log("ID :" , userId);
 
   async function fetchUser() {
     if (!userId) return;
-
     try {
-      const response = await api.get(`user/data/${userId}`);
+      const response = await api.get(`/user/data/${userId}`);
       setData([response.data]);
     } catch (error) {
       console.log("User API Error:", error);
     }
   }
+
+  useEffect(() => {
+    fetchUser();
+  }, [userId]);
 
   return (
     <div className="max-w-md min-h-[calc(100vh)] mx-auto bg-white shadow rounded-lg p-6 mt-5">

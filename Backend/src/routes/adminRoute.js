@@ -6,7 +6,7 @@ import {
     getAdminServices,
     addService,
     updateService,
-    deleteService,
+    deleteService
 } from "../Controller/adminController.js";
 
 const router = express.Router();

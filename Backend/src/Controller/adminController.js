@@ -57,31 +57,36 @@ const updateUserStatus = async (req, res) => {
         const { id } = req.params;
         const { isActive } = req.body;
 
+        if (typeof isActive !== "boolean") {
+            return res.status(400).json({
+                message: "Invalid status"
+            });
+        }
+
         const [result] = await db.execute(
             "UPDATE users SET isActive = ? WHERE id = ?",
-            [isActive, id]
+            [isActive ? 1 : 0, id]
         );
 
         if (result.affectedRows === 0) {
             return res.status(404).json({
-                message: "User not found",
+                message: "User not found"
             });
         }
 
         res.status(200).json({
-            message: `User ${
-                isActive ? "activated" : "deactivated"
-            } successfully`,
-            isActive,
+            message: `User ${isActive ? "activated" : "deactivated"} successfully`,
+            isActive
         });
     } catch (error) {
         console.error("Update user status error:", error);
 
         res.status(500).json({
-            message: "Failed to update user status",
+            message: "Failed to update user status"
         });
     }
 };
+
 const getAdminServices = async (req, res) => {
 
     try {

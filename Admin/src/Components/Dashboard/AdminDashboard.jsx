@@ -9,6 +9,8 @@ import { logout } from '../../../../Frontend/src/features/Auth/authSlice';
 import Contact from '../Pages/Contact';
 import Service from '../Pages/Service';
 import HomeText from '../Pages/HomeText';
+import CaseStudy from '../Pages/CaseStudy';
+import Pages from '../Pages/Pages';
 
 function AdminDashboard() {
     const [menu, setMenu] = useState("dashboard");
@@ -27,8 +29,11 @@ function AdminDashboard() {
         { id: "HomepageManager", name: " HomePage Manager" },
         { id: "HomeText", name: " HomeText" },
         { id: "users", name: "Users" },
+        { id: "pages", name: "Pages" },
         { id: "contact", name: "Contact" },
+        { id: "CaseStudy", name: "Case Study" },
         { id: "logout", name: "Logout" },
+
     ];
 
     const renderPage = () => {
@@ -42,13 +47,13 @@ function AdminDashboard() {
             case "HomepageManager":
                 return (
                     <>
-                      <Service/>
+                        <Service />
                     </>
                 );
             case "HomeText":
                 return (
                     <>
-                      <HomeText/>
+                        <HomeText />
                     </>
                 );
             case "users":
@@ -63,6 +68,18 @@ function AdminDashboard() {
                         <Contact />
                     </>
                 );
+            case "pages":
+                return (
+                    <>
+                        <Pages />
+                    </>
+                );
+            case "CaseStudy":
+                return (
+                    <>
+                        <CaseStudy />
+                    </>
+                )
             case "logout":
                 return (
                     <>
@@ -78,7 +95,7 @@ function AdminDashboard() {
 
 
     return (
-        <div className="flex">
+        <div className="flex h-screen">
             <aside className="w-70 bg-gray-300  text-black">
 
                 <div className="text-3xl font-bold p-6 border-b border-gray-700">

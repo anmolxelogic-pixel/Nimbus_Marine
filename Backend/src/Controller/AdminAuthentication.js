@@ -8,7 +8,7 @@ const adminLogin = async (req, res) => {
 
         if (!email || !password) {
             return res.status(400).json({
-                message: "Email and password are required",
+                message: "Email and password are required"
             });
         }
 
@@ -19,7 +19,7 @@ const adminLogin = async (req, res) => {
 
         if (rows.length === 0) {
             return res.status(404).json({
-                message: "Admin account not found",
+                message: "Admin account not found"
             });
         }
 
@@ -29,25 +29,26 @@ const adminLogin = async (req, res) => {
 
         if (!isMatch) {
             return res.status(401).json({
-                message: "Invalid credentials",
+                message: "Invalid credentials"
             });
         }
 
         const token = generateToken(admin.id, "admin");
 
-        return res.status(200).json({
+        res.status(200).json({
             message: "Admin login successful",
             token,
-            admin: {
+            user: {
                 id: admin.id,
                 email: admin.email,
-            },
+                role: "admin"
+            }
         });
     } catch (error) {
         console.error("Admin login error:", error);
 
-        return res.status(500).json({
-            message: "Server error",
+        res.status(500).json({
+            message: "Server error"
         });
     }
 };

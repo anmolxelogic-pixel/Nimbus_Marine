@@ -10,7 +10,6 @@ function Login() {
   const dispatch = useDispatch();
 
   const [showPassword] = useState(false);
-
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -25,14 +24,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await api.post("user/login", user);
-
       dispatch(login(response.data));
-
       toast.success("Login completed!");
-
       navigate(
         response.data.user.role === "admin"
           ? "/admin/dashboard"
@@ -40,7 +35,7 @@ function Login() {
         { replace: true }
       );
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
+      toast.error("Deactivate by Admin");
     }
   };
 
@@ -52,7 +47,6 @@ function Login() {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Email
@@ -69,7 +63,6 @@ function Login() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Password
@@ -86,7 +79,6 @@ function Login() {
             />
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 transition duration-300 text-white py-3 rounded-lg font-semibold cursor-pointer"
