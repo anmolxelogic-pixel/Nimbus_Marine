@@ -284,6 +284,7 @@ function HomeText() {
                         </p>
 
                         <div className="mb-5 overflow-hidden rounded-lg">
+                            <img src={heroImage || banner} alt="Current hero" className="h-48 w-full object-cover"/>
                         </div>
 
                         <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">

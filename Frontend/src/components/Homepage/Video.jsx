@@ -11,7 +11,6 @@ function Video() {
       className="relative min-h-[500px] sm:grid-cols-2 lg:grid-cols-3 flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat px-6 text-center"
       style={{   backgroundImage: `url(${video})` }}
     >
-      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
 

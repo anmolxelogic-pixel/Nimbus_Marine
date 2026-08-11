@@ -9,12 +9,7 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-
 router.get("/", getHomeContent);
-
-
-
-
 router.put("/", updateHomeContent);
 
 

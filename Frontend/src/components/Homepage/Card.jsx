@@ -36,9 +36,6 @@ function Card() {
           "http://localhost:8000/api/Services/aa"
         );
 
-        console.log("Services from backend:", response.data);
-
-        // Make sure services is always an array
         if (Array.isArray(response.data)) {
           setServices(response.data);
         } else if (Array.isArray(response.data.data)) {
@@ -100,9 +97,7 @@ function Card() {
 
         {services.length === 0 ? (
           <div className="text-center">
-            <p className="text-gray-500">
-              No services available.
-            </p>
+            <p className="text-gray-500"> No services available.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
@@ -125,10 +120,7 @@ function Card() {
                   {service.description}
                 </p>
 
-                <button
-                  type="button"
-                  className="mt-8 text-orange-500 font-semibold cursor-pointer hover:text-orange-600"
-                >
+                <button type="button" className="mt-8 text-orange-500 font-semibold cursor-pointer hover:text-orange-600">
                   Learn More →
                 </button>
 
@@ -142,5 +134,4 @@ function Card() {
     </section>
   );
 }
-
 export default Card;

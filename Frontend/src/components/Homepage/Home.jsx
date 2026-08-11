@@ -13,6 +13,7 @@ function Home() {
     const fetchHomeContent = async () => {
         try {
             const response = await axios.get("http://localhost:8000/api/home");
+
             if (response.data.success) {
                 setHomeData(response.data.data);
             }
@@ -23,12 +24,9 @@ function Home() {
 
     const fetchImage = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/api/files/get");
-
-            console.log("Image API:", response.data);
-
-            console.log("Hero image:", heroImage);
-
+            const response = await axios.get(
+                "http://localhost:8000/api/files/get"
+            );
             if (response.data.success && response.data.data?.url) {
                 setHeroImage(response.data.data.url);
             }
@@ -42,13 +40,12 @@ function Home() {
             await Promise.all([fetchHomeContent(), fetchImage()]);
             setLoading(false);
         };
-
         loadHome();
     }, []);
 
     if (loading) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
+            <div className="flex min-h-screen items-center justify-center px-4 text-center">
                 Loading...
             </div>
         );
@@ -56,7 +53,7 @@ function Home() {
 
     if (!homeData) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
+            <div className="flex min-h-screen items-center justify-center px-4 text-center">
                 Unable to load homepage content.
             </div>
         );
@@ -64,82 +61,147 @@ function Home() {
 
     return (
         <>
+
             <section
-                className="relative min-h-[700px] w-full bg-cover bg-center bg-no-repeat"
+                className="relative min-h-[600px] w-full bg-cover bg-center bg-no-repeat sm:min-h-[650px] lg:min-h-[700px]"
                 style={{
-                    backgroundImage: `url(${heroImage})`
+                    backgroundImage: `url(${heroImage})`,
                 }}
             >
-                <div className="relative right-18 mx-auto flex min-h-[600px] max-w-[1220px] items-center px-6">
-                    <div className="w-full max-w-[700px] pt-2 md:ml-[5%] lg:ml-[7%]">
-                        <h3 className="text-xl font-bold leading-[1.2] tracking-tight text-white sm:text-5xl md:text-[54px] whitespace-pre-line">
+
+                <div className="relative mx-auto flex min-h-[600px] w-full max-w-[1220px] items-center px-5 py-12 sm:min-h-[650px] sm:px-8 lg:min-h-[700px] lg:px-10">
+                    <div className="w-full max-w-[700px] lg:ml-[5%]">
+                        
+                        <h3
+                            className="
+                                whitespace-pre-line
+                                text-3xl
+                                font-bold
+                                leading-[1.15]
+                                tracking-tight
+                                text-white
+                                sm:text-4xl
+                                md:text-5xl
+                                lg:text-[54px]
+                            "
+                        >
                             {homeData.heading}
                         </h3>
 
-                        <p className="mt-4 text-lg font-medium text-white sm:text-xl">
+                        <p
+                            className="
+                                mt-4
+                                max-w-[600px]
+                                text-base
+                                font-medium
+                                leading-relaxed
+                                text-white
+                                sm:text-lg
+                                md:text-xl
+                            "
+                        >
                             {homeData.subtitle}
                         </p>
 
-                        <div className="mt-5 flex flex-wrap gap-1">
+                        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                             <button
                                 onClick={() => navigate("/")}
-                                className="cursor-pointer bg-orange-500 px-5 py-4 font-poppins text-base font-medium text-white transition"
+                                className="
+                                    w-full
+                                    cursor-pointer
+                                    bg-orange-500
+                                    px-6
+                                    py-3.5
+                                    font-poppins
+                                    text-sm
+                                    font-medium
+                                    text-white
+                                    transition
+                                    hover:bg-orange-600
+                                    sm:w-auto
+                                    sm:text-base
+                                "
                             >
                                 {homeData.primaryButton}
                             </button>
 
                             <button
                                 onClick={() => navigate("/")}
-                                className="cursor-pointer bg-orange-500 px-5 py-4 font-poppins text-base font-medium text-white transition"
+                                className="
+                                    w-full
+                                    cursor-pointer
+                                    bg-orange-500
+                                    px-6
+                                    py-3.5
+                                    font-poppins
+                                    text-sm
+                                    font-medium
+                                    text-white
+                                    transition
+                                    hover:bg-orange-600
+                                    sm:w-auto
+                                    sm:text-base
+                                "
                             >
                                 {homeData.secondaryButton}
                             </button>
                         </div>
 
-                        <div className="mt-12 flex flex-wrap items-center gap-3 gap-y-2">
+                        <div
+                            className="
+                                mt-10
+                                grid
+                                grid-cols-1
+                                gap-6
+                                sm:mt-12
+                                sm:grid-cols-2
+                                lg:grid-cols-3
+                                lg:gap-5
+                            "
+                        >
                             <div className="flex items-center gap-3">
-                                <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-orange-500 text-3xl text-orange-500">
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 border-orange-500 text-2xl text-orange-500 sm:h-14 sm:w-14 sm:text-3xl">
                                     ✓
                                 </div>
 
                                 <div>
-                                    <h3 className="font-montserrat text-2xl font-bold text-white">
+                                    <h3 className="font-montserrat text-xl font-bold text-white sm:text-2xl">
                                         {homeData.experienceNumber}
                                     </h3>
 
-                                    <p className="font-poppins text-lg text-white">
+                                    <p className="font-poppins text-sm text-white sm:text-base lg:text-lg">
                                         {homeData.experienceText}
                                     </p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 text-2xl font-bold text-orange-500">
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 border-orange-500 text-lg font-bold text-orange-500 sm:h-14 sm:w-14 sm:text-2xl">
                                     ISO
                                 </div>
 
                                 <div>
-                                    <h3 className="font-montserrat text-2xl font-bold text-white">
+                                    <h3 className="font-montserrat text-xl font-bold text-white sm:text-2xl">
                                         {homeData.isoNumber}
                                     </h3>
 
-                                    <p className="font-poppins text-lg text-white">
+                                    <p className="font-poppins text-sm text-white sm:text-base lg:text-lg">
                                         {homeData.isoText}
                                     </p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-orange-500 text-3xl text-orange-500">
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 border-orange-500 text-2xl text-orange-500 sm:h-14 sm:w-14 sm:text-3xl">
                                     ◎
                                 </div>
 
                                 <div>
-                                    <h3 className="font-montserrat text-2xl font-bold text-white">
+                                    <h3 className="font-montserrat text-xl font-bold text-white sm:text-2xl">
                                         {homeData.countriesNumber}
                                     </h3>
 
-                                    <p className="font-poppins text-lg text-white">
+                                    <p className="font-poppins text-sm text-white sm:text-base lg:text-lg">
                                         {homeData.countriesText}
                                     </p>
                                 </div>

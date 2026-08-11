@@ -64,7 +64,7 @@ function Register() {
   };
 
   return (
-    <div className="mt-20 via-indigo-500 to-purple-600 flex items-center justify-center px-4">
+    <div className="mt-20 mb-20 via-indigo-500 to-purple-600 flex items-center justify-center px-4">
       <div className="bg-white shadow-2xl rounded-2xl w-full max-w-md p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">

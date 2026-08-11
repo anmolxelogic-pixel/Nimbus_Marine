@@ -88,7 +88,6 @@ const updateUserStatus = async (req, res) => {
 };
 
 const getAdminServices = async (req, res) => {
-
     try {
 
         const [services] = await db.execute(`
