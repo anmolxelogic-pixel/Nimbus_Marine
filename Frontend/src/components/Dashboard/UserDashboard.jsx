@@ -14,6 +14,8 @@ function UserDashboard() {
     try {
       const response = await api.get(`/user/data/${userId}`);
       setData([response.data]);
+
+      console.log("ID:", userId);
     } catch (error) {
       console.log("User API Error:", error);
     }

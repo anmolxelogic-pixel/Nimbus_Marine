@@ -104,34 +104,26 @@ await db.execute(`
 console.log("Navbar Table Ready");
 
 
-
 await db.execute(`
-    INSERT INTO navbar (
-        id,
-        logo,
-        home_text,
-        about_text,
-        locations_text,
-        contact_text,
-        career_text,
-        services_text,
-        sector_text
-    )
-    VALUES (
-        1,
-        NULL,
-        'Home',
-        'About',
-        'Locations',
-        'Contact',
-        'Career',
-        'Services',
-        'Sector'
-    )
-    ON DUPLICATE KEY UPDATE id = id
-`);
+    CREATE TABLE IF NOT EXISTS nav (
+    id INT AUTO_INCREMENT PRIMARY KEY,
 
-console.log("Default Navbar Ready");
+    logo VARCHAR(500) NULL,
+
+    menu_items JSON NOT NULL,
+
+    is_active BOOLEAN DEFAULT TRUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+`)
+
+console.log("nav table created");
+
+
 
 
 
@@ -187,81 +179,5 @@ await db.execute(`
 
 console.log("Footer Table Ready");
 
-await db.execute(`
-    INSERT INTO footer (
-        id,
-        logo,
-        company_name,
-        company_tagline,
-        company_description,
-
-        quick_links_title,
-        quick_home,
-        quick_dashboard,
-        quick_profile,
-        quick_support,
-
-        resources_title,
-        resource_privacy,
-        resource_terms,
-        resource_documentation,
-        resource_help,
-
-        contact_title,
-        contact_address,
-        contact_phone,
-        contact_email,
-        contact_website,
-
-        certification_title,
-        certification_one_title,
-        certification_one_description,
-        certification_two_title,
-        certification_two_description,
-
-        copyright_text,
-        privacy_text,
-        terms_text
-    )
-    VALUES (
-        1,
-        NULL,
-
-        'Global Maritime',
-        'Global Maritime Solutions',
-        'Your trusted partner for maritime and offshore solutions.',
-
-        'Quick Links',
-        'Home',
-        'Dashboard',
-        'Profile',
-        'Support',
-
-        'Resources',
-        'Privacy Policy',
-        'Terms & Conditions',
-        'Documentation',
-        'Help Center',
-
-        'Contact Us',
-        'India',
-        '+91 0000000000',
-        'info@example.com',
-        'www.example.com',
-
-        'Certifications',
-        'ISO Certified',
-        'Internationally certified maritime services.',
-        'Quality Certified',
-        'Committed to quality and professional standards.',
-
-        '© 2026 Global Maritime. All rights reserved.',
-        'Privacy Policy',
-        'Terms & Conditions'
-    )
-    ON DUPLICATE KEY UPDATE id = id
-`);
-
-console.log("Default Footer Ready");
 
 export default db;

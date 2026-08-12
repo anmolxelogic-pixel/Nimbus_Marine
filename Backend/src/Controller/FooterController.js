@@ -69,9 +69,6 @@ const getFooter = async (req, res) => {
 
 const updateFooter = async (req, res) => {
     try {
-        console.log("FOOTER BODY:", req.body);
-        console.log("FOOTER FILE:", req.file);
-
         const {
             company_name,
             company_tagline,
@@ -109,8 +106,6 @@ const updateFooter = async (req, res) => {
 
         if (req.file) {
             const logoPath = `/uploads/${req.file.filename}`;
-
-            console.log("New logo path:", logoPath);
 
             query = `
                 UPDATE footer

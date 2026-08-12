@@ -35,13 +35,15 @@ const handleSubmit = async (e) => {
         return;
     }
 
-    if(!user.password.length<8){
-      toast.error("password length must be 8 char")
+    if (user.password.length < 8) {
+        toast.error("Password must be at least 8 characters.");
+        return;
     }
 
-
     try {
-        const response = await api.post("user/login", user);
+        const response = await api.post("/user/login", user);
+
+        console.log("LOGIN RESPONSE:", response.data);
 
         dispatch(login(response.data));
 
@@ -53,12 +55,24 @@ const handleSubmit = async (e) => {
                 : "/",
             { replace: true }
         );
-
     } catch (error) {
+        console.error(
+            "LOGIN ERROR:",
+            error.response?.data || error
+        );
+
         if (error.response?.status === 403) {
             toast.error("Account deactivated by admin.");
+        } else if (error.response?.status === 401) {
+            toast.error(
+                error.response?.data?.message ||
+                "Invalid email or password."
+            );
         } else {
-            toast.error("Login failed. Please try again.");
+            toast.error(
+                error.response?.data?.message ||
+                "Login failed. Please try again."
+            );
         }
     }
 };

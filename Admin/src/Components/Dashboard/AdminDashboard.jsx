@@ -12,18 +12,7 @@ import CaseStudy from "../Pages/CaseStudy";
 import Pages from "../Pages/Pages";
 import Navbar from "../Pages/Navbar";
 import Footer from "../Pages/Footer";
-import {
-    FiHome,
-    FiLayout,
-    FiMenu,
-    FiType,
-    FiUsers,
-    FiFileText,
-    FiMail,
-    FiBookOpen,
-    FiLogOut,
-    FiChevronDown,
-} from "react-icons/fi";
+import { FiHome, FiLayout, FiMenu, FiType, FiUsers, FiFileText, FiMail, FiBookOpen,FiLogOut, FiChevronDown,} from "react-icons/fi";
 
 function AdminDashboard() {
     const [menu, setMenu] = useState("dashboard");
@@ -87,11 +76,13 @@ function AdminDashboard() {
             name: "Navbar",
             icon: <FiMenu size={18} />,
         },
+        
         {
             id: "HomeText",
             name: "Home Text",
             icon: <FiType size={18} />,
         },
+        
     ];
 
     const renderPage = () => {
@@ -277,5 +268,4 @@ function AdminDashboard() {
         </div>
     );
 }
-
 export default AdminDashboard;

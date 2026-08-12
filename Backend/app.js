@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import path from 'path';
 
 import userRoutes from "./src/routes/userRoutes.js";
 import adminRoute from "./src/routes/adminRoute.js";
@@ -7,8 +8,10 @@ import serviceRoutes from "./src/routes/serviceRoute.js";
 import homeRoute from "./src/routes/homeRoute.js";
 import fileRoute from "./src/routes/fileRoutes.js";
 import adminAuthRoute from "./src/routes/adminAuthRoute.js";
-import navbarRoute from "./src/routes/NavbarRoute.js";
+// import navbarRoute from "./src/routes/NavbarRoute.js";
 import FooterRoute from "./src/routes/FooterRoute.js";
+
+import NavRoute from "./src/routes/NavRoute.js"
 
 const app = express();
 
@@ -20,7 +23,10 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use(
+    "/uploads",
+    express.static(path.join(process.cwd(), "uploads"))
+);
 
 app.use("/uploads", express.static("uploads"));
 
@@ -36,11 +42,7 @@ app.use("/api/home", homeRoute);
 
 app.use("/api/files", fileRoute);
 
-
-
-app.use("/api/navbar", navbarRoute);
-
-
+app.use("/api/navbar", NavRoute);
 
 app.use("/api/footer", FooterRoute);
 

@@ -131,7 +131,7 @@ function Footer() {
                             <li>
                                 <Link
                                     className="text-black transition duration-300 hover:text-[#ff7a00]"
-                                    to="/home"
+                                    to="/"
                                 >
                                     {footer.quick_home}
                                 </Link>

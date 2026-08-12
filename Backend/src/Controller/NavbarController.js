@@ -37,8 +37,6 @@ const getNavbar = async (req, res) => {
     }
 };
 
-
-
 const updateNavbar = async (req, res) => {
     try {
         const {

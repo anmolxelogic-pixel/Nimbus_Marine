@@ -12,6 +12,8 @@ import UserDashboard from "./components/Dashboard/UserDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Navbar/Footer";
+import About from "./components/Homepage/About";
+import Contact from "./components/Homepage/Contact";
 
 
 function App() {
@@ -24,14 +26,13 @@ function App() {
       <main className="flex-1">
         <Routes>
 
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          <Route path="/login" element={<Login />} />
-
           <Route path="/" element={<Home />} />
-
           <Route path="/dashboard" element={<UserDashboard />} />
-
+          <Route path="/about" element={<About/>} />
+          <Route path="/contact" element={<Contact/>} />
 
         </Routes>
 
