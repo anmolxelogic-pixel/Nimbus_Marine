@@ -57,31 +57,13 @@ function Navbar() {
             ? "text-orange-500"
             : "text-gray-800 hover:text-orange-500"
         }`;
-
-
-
     const navLinks = navbar
         ? [
-            {
-                name: navbar.home_text,
-                path: "/home",
-            },
-            {
-                name: navbar.about_text,
-                path: "/about",
-            },
-            {
-                name: navbar.locations_text,
-                path: "/locations",
-            },
-            {
-                name: navbar.contact_text,
-                path: "/contact",
-            },
-            {
-                name: navbar.career_text,
-                path: "/career",
-            },
+            {name: navbar.home_text, path: "/"},
+            {name: navbar.about_text,path: "/about"},
+            {name: navbar.locations_text,path: "/location"},
+            {name: navbar.contact_text,path: "/contact"},
+            {name: navbar.career_text,path: "/career"},
         ]
         : [];
 
@@ -129,17 +111,9 @@ function Navbar() {
 
 
 
-                <Link
-                    to="/home"
-                    onClick={() => setMobileMenu(false)}
-                    className="flex shrink-0 items-center"
-                >
+                <Link to="/" onClick={() => setMobileMenu(false)}className="flex shrink-0 items-center">
                     {navbar.logo ? (
-                        <img
-                            src={`http://localhost:8000${navbar.logo}`}
-                            alt="Logo"
-                            className="h-20 w-auto object-contain"
-                        />
+                        <img src={`http://localhost:8000${navbar.logo}`} alt="Logo"className="h-20 w-auto object-contain"/>
                     ) : (
                         <span className="text-xl font-bold text-orange-500">
                             Logo

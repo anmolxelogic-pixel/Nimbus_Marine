@@ -16,42 +16,28 @@ import Footer from "./components/Navbar/Footer";
 
 function App() {
   return (
-   <div className="min-h-screen flex flex-col">
-     <ToastContainer position="top-right" autoClose={200} />
+    <div className="min-h-screen flex flex-col">
+      <ToastContainer position="top-right" autoClose={200} />
 
       <Navbar />
 
-     <main className="flex-1">
+      <main className="flex-1">
         <Routes>
-      
-        <Route path="/register" element={
-            <Register />
-         
-        } />
 
-        <Route path="/login" element={
-         
-               <Login />
-        
-           
-         
-        } />
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/" element={
-        
-            <Home />
-         
-          
-        } />
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/" element={<Home />} />
 
-        <Route path="*" element={<RoleRedirect />} />
-      </Routes>
+          <Route path="/dashboard" element={<UserDashboard />} />
 
-     </main>
-      <Footer/>
-   </div>
+
+        </Routes>
+
+      </main>
+      <Footer />
+    </div>
   );
 }
 

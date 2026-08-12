@@ -22,20 +22,46 @@ function Login() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await api.post("user/login", user);
-      dispatch(login(response.data));
-      toast.success("Login completed!");
-      navigate(
-        response.data.user.role === "admin"? "/admin/dashboard": "/home",
-        { replace: true }
-      );
-    } catch (error) {
-      toast.error("Deactivate by Admin");
+
+    if (!user.email.trim()) {
+        toast.error("Please enter your email.");
+        return;
     }
-  };
+
+    if (!user.password) {
+        toast.error("Please enter your password.");
+        return;
+    }
+
+    if(!user.password.length<8){
+      toast.error("password length must be 8 char")
+    }
+
+
+    try {
+        const response = await api.post("user/login", user);
+
+        dispatch(login(response.data));
+
+        toast.success("Login completed!");
+
+        navigate(
+            response.data.user.role === "admin"
+                ? "/admin/dashboard"
+                : "/",
+            { replace: true }
+        );
+
+    } catch (error) {
+        if (error.response?.status === 403) {
+            toast.error("Account deactivated by admin.");
+        } else {
+            toast.error("Login failed. Please try again.");
+        }
+    }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
