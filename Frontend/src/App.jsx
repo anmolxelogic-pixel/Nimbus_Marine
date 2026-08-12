@@ -23,37 +23,28 @@ function App() {
 
      <main className="flex-1">
         <Routes>
-        <Route path="/" element={<RoleRedirect />} />
-
+      
         <Route path="/register" element={
-          <PublicRoute>
             <Register />
-          </PublicRoute>
+         
         } />
 
         <Route path="/login" element={
-          <PublicRoute>
-            <Login />
-          </PublicRoute>
+         
+               <Login />
+        
+           
+         
         } />
 
-        <Route path="/home" element={
-          <Protected>
+        <Route path="/" element={
+        
             <Home />
-          </Protected>
+         
+          
         } />
 
-        <Route path="/dashboard" element={
-          <Protected allowedRole="user">
-            <UserDashboard />
-          </Protected>
-        } />
-
-        <Route path="/admin/dashboard" element={
-          <Protected allowedRole="admin">
-            <AdminDashboard />
-          </Protected>
-        } />
+        <Route path="/dashboard" element={<UserDashboard />} />
 
         <Route path="*" element={<RoleRedirect />} />
       </Routes>

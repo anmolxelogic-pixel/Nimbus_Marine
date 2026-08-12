@@ -29,9 +29,7 @@ function Login() {
       dispatch(login(response.data));
       toast.success("Login completed!");
       navigate(
-        response.data.user.role === "admin"
-          ? "/admin/dashboard"
-          : "/home",
+        response.data.user.role === "admin"? "/admin/dashboard": "/home",
         { replace: true }
       );
     } catch (error) {

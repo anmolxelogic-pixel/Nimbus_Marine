@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { RiFacebookFill } from "react-icons/ri";
 import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { BsGlobe } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 function Footer() {
     const [footer, setFooter] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const { token, role, user } = useSelector((state) => state.auth);
+
     useEffect(() => {
         const fetchFooter = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:8000/api/footer"
-                );
-
+                const response = await fetch("http://localhost:8000/api/footer");
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(
-                        data.message || "Failed to fetch footer"
-                    );
+                    throw new Error("Failed to fetch footer");
                 }
-
-                console.log("Footer data:", data);
-
                 setFooter(data);
 
             } catch (error) {
@@ -70,9 +64,7 @@ function Footer() {
         return null;
     }
 
-    const logoUrl = footer.logo
-        ? `http://localhost:8000${footer.logo}`
-        : null;
+    const logoUrl = footer.logo ? `http://localhost:8000${footer.logo}` : null;
 
     return (
         <footer className="bg-white">
@@ -81,53 +73,34 @@ function Footer() {
 
                 <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
 
-                    {/* COMPANY */}
-
                     <div className="text-center sm:text-left">
 
                         <div className="flex items-center justify-center gap-3 sm:justify-start">
 
                             {logoUrl && (
-                                <img
-                                    src={logoUrl}
-                                    alt={footer.company_name || "Company Logo"}
-                                    className="w-12 sm:w-14 object-contain"
-                                />
+                                <img src={logoUrl} alt={footer.company_name || "Company Logo"} className="w-12 sm:w-14 object-contain" />
                             )}
 
                             <div>
-
-                                <h2 className="text-3xl font-extrabold uppercase tracking-wide text-black sm:text-4xl">
-                                    {footer.company_name}
-                                </h2>
-
-                                <p className="text-xs font-semibold uppercase tracking-wider text-black sm:text-sm">
-                                    {footer.company_tagline}
-                                </p>
-
+                                <h2 className="text-3xl font-extrabold uppercase tracking-wide text-black sm:text-4xl">{footer.company_name} </h2>
+                                <p className="text-xs font-semibold uppercase tracking-wider text-black sm:text-sm">{footer.company_tagline}</p>
                             </div>
 
                         </div>
 
-                        <p className="mt-5 text-sm leading-7 text-black sm:mt-6">
-                            {footer.company_description}
-                        </p>
+                        <p className="mt-5 text-sm leading-7 text-black sm:mt-6">{footer.company_description}</p>
 
-                        {/* SOCIAL */}
 
                         <div className="mt-6 flex justify-center gap-3 sm:justify-start sm:gap-4">
 
-                            <a
-                                href={footer.facebook_url || "#"}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <p href={"/facebook"} target="_blank" rel="noopener noreferrer"
                                 aria-label="Facebook"
                                 className="flex h-11 w-11 items-center justify-center rounded-md bg-[#ff7a00] transition duration-300 hover:scale-105 hover:bg-orange-600"
                             >
                                 <RiFacebookFill size={24} />
-                            </a>
+                            </p>
 
-                            <a
+                            <p
                                 href={footer.linkedin_url || "#"}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -135,23 +108,17 @@ function Footer() {
                                 className="flex h-11 w-11 items-center justify-center rounded-md bg-[#ff7a00] transition duration-300 hover:scale-105 hover:bg-orange-600"
                             >
                                 <FaLinkedinIn size={20} />
-                            </a>
+                            </p>
 
-                            <a
-                                href={footer.twitter_url || "#"}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Twitter"
+                            <p href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
                                 className="flex h-11 w-11 items-center justify-center rounded-md bg-[#ff7a00] transition duration-300 hover:scale-105 hover:bg-orange-600"
                             >
                                 <FaTwitter size={20} />
-                            </a>
+                            </p>
 
                         </div>
 
                     </div>
-
-                    {/* QUICK LINKS */}
 
                     <div className="border-t border-gray-300 pt-8 text-center sm:border-t-0 sm:border-l sm:pl-6 sm:pt-0 sm:text-left lg:pl-8">
 
@@ -170,22 +137,24 @@ function Footer() {
                                 </Link>
                             </li>
 
+                            
                             <li>
-                                <Link
+                                {token ? (
+                                     <Link
                                     className="text-black transition duration-300 hover:text-[#ff7a00]"
                                     to="/dashboard"
                                 >
                                     {footer.quick_dashboard}
                                 </Link>
-                            </li>
-
-                            <li>
-                                <Link
+                                ) : (
+                                     <Link
                                     className="text-black transition duration-300 hover:text-[#ff7a00]"
-                                    to="/profile"
+                                    to="/Login"
                                 >
-                                    {footer.quick_profile}
+                                   Dashboard
                                 </Link>
+                                )}
+                               
                             </li>
 
                             <li>
@@ -200,8 +169,6 @@ function Footer() {
                         </ul>
 
                     </div>
-
-                    {/* RESOURCES */}
 
                     <div className="border-t border-gray-300 pt-8 text-center sm:border-t-0 sm:border-l sm:pl-6 sm:pt-0 sm:text-left lg:pl-8">
 
@@ -250,8 +217,6 @@ function Footer() {
                         </ul>
 
                     </div>
-
-                    {/* CONTACT */}
 
                     <div className="border-t border-gray-300 pt-8 text-center sm:border-t-0 sm:border-l sm:pl-6 sm:pt-0 sm:text-left lg:pl-8">
 
@@ -305,7 +270,6 @@ function Footer() {
 
                     </div>
 
-                    {/* CERTIFICATIONS */}
 
                     <div className="border-t border-gray-300 pt-8 text-center sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0 sm:text-left lg:col-span-1 lg:pl-8">
 
@@ -361,7 +325,7 @@ function Footer() {
 
                 </div>
 
-                {/* BOTTOM FOOTER */}
+
 
                 <div className="mt-12 border-t border-gray-300 pt-6 sm:mt-14 sm:pt-8">
 

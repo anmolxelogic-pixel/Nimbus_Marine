@@ -9,7 +9,7 @@ function RoleRedirect() {
     return <Navigate to="/login" replace />;
   }
 
-  return <Navigate to={role === "admin" ? "/admin/dashboard" : "/dashboard"} replace />;
+  return <Navigate to={role === "admin" ? "/admin/dashboard" : "/"} replace />;
 }
 
 export default RoleRedirect;

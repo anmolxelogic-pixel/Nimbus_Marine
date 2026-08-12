@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/Auth/authSlice";
-import {FiMenu,FiX,FiChevronDown,} from "react-icons/fi";
+import { FiMenu, FiX, FiChevronDown, } from "react-icons/fi";
 
 function Navbar() {
     const [mobileMenu, setMobileMenu] = useState(false);
@@ -16,11 +16,8 @@ function Navbar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { token, role, user } = useSelector(
-        (state) => state.auth
-    );
+    const { token, role, user } = useSelector((state) => state.auth);
 
-    
     useEffect(() => {
         const fetchNavbar = async () => {
             try {
@@ -41,7 +38,7 @@ function Navbar() {
         fetchNavbar();
     }, []);
 
-    
+
 
     const handleLogout = () => {
         dispatch(logout());
@@ -55,43 +52,40 @@ function Navbar() {
         });
     };
 
-    
-
     const linkClass = ({ isActive }) =>
-        `px-3 py-2 text-base font-medium transition ${
-            isActive
-                ? "text-orange-500"
-                : "text-gray-800 hover:text-orange-500"
+        `px-3 py-2 text-base font-medium transition ${isActive
+            ? "text-orange-500"
+            : "text-gray-800 hover:text-orange-500"
         }`;
 
-    
+
 
     const navLinks = navbar
         ? [
-              {
-                  name: navbar.home_text,
-                  path: "/home",
-              },
-              {
-                  name: navbar.about_text,
-                  path: "/about",
-              },
-              {
-                  name: navbar.locations_text,
-                  path: "/locations",
-              },
-              {
-                  name: navbar.contact_text,
-                  path: "/contact",
-              },
-              {
-                  name: navbar.career_text,
-                  path: "/career",
-              },
-          ]
+            {
+                name: navbar.home_text,
+                path: "/home",
+            },
+            {
+                name: navbar.about_text,
+                path: "/about",
+            },
+            {
+                name: navbar.locations_text,
+                path: "/locations",
+            },
+            {
+                name: navbar.contact_text,
+                path: "/contact",
+            },
+            {
+                name: navbar.career_text,
+                path: "/career",
+            },
+        ]
         : [];
 
-   
+
 
     const services = [
         {
@@ -108,8 +102,6 @@ function Navbar() {
         },
     ];
 
-   
-
     const sectors = [
         {
             name: "Maritime / Commercial Shipping",
@@ -125,8 +117,6 @@ function Navbar() {
         },
     ];
 
-    
-
     if (!navbar) {
         return null;
     }
@@ -137,7 +127,7 @@ function Navbar() {
 
             <div className="flex min-h-[72px] items-center px-6">
 
-               
+
 
                 <Link
                     to="/home"
@@ -160,7 +150,7 @@ function Navbar() {
 
                 <div className="ml-auto hidden items-center lg:flex">
 
-                   
+
 
                     <div className="flex items-center">
 
@@ -250,15 +240,15 @@ function Navbar() {
 
 
                     {token ? (
-                        <div className="ml-3 flex items-center border-l border-gray-200 pl-3">
+                        <div className="ml-3  items-center border-l border-gray-200 pl-3">
+                            <p className="ml-2 ">{user.fullname}</p>
                             <button
                                 onClick={handleLogout}
                                 type="button"
-                                className="ml-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500"
+                                className="ml-2  py-2 text-sm font-medium text-gray-700 hover:text-orange-500"
                             >
                                 Logout
                             </button>
-
                         </div>
                     ) : (
                         <Link
@@ -268,26 +258,14 @@ function Navbar() {
                             Login
                         </Link>
                     )}
-
                 </div>
 
-
-                <button
-                    type="button"
-                    onClick={() =>
-                        setMobileMenu(!mobileMenu)
-                    }
+                <button type="button" onClick={() => setMobileMenu(!mobileMenu)}
                     className="ml-auto rounded-lg p-2 text-gray-800 hover:bg-gray-100 lg:hidden"
                 >
-                    {mobileMenu ? (
-                        <FiX size={26} />
-                    ) : (
-                        <FiMenu size={26} />
-                    )}
+                    {mobileMenu ? ( <FiX size={26} />) : (<FiMenu size={26} />)}
                 </button>
-
             </div>
-
 
             {mobileMenu && (
                 <div className="border-t border-gray-200 bg-white px-4 py-3 shadow-lg lg:hidden">
@@ -302,10 +280,9 @@ function Navbar() {
                                 setMobileMenu(false)
                             }
                             className={({ isActive }) =>
-                                `block border-b border-gray-100 px-3 py-3 text-base font-medium ${
-                                    isActive
-                                        ? "text-orange-500"
-                                        : "text-gray-800"
+                                `block border-b border-gray-100 px-3 py-3 text-base font-medium ${isActive
+                                    ? "text-orange-500"
+                                    : "text-gray-800"
                                 }`
                             }
                         >
