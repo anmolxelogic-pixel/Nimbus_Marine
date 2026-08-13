@@ -3,7 +3,7 @@ import React from 'react'
 function Pages() {
   return (
     <div>
-       <div className="mb-8">
+       <div className="mb-8 px-4 py-4 text-center">
                 <h1 className="text-3xl font-bold text-gray-800">
                    All Pages 
                 </h1>

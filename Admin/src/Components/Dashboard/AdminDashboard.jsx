@@ -173,15 +173,7 @@ function AdminDashboard() {
                         {homeOpen && (
                             <div className="mt-2 ml-4 pl-4 border-l-2 border-orange-200 space-y-1">
                                 {homeItems.map((item) => (
-                                    <button
-                                        key={item.id}
-                                        onClick={() => setMenu(item.id)}
-                                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-sm transition ${
-                                            menu === item.id
-                                                ? "bg-orange-500 text-white"
-                                                : "text-gray-600 hover:bg-orange-50 hover:text-orange-500"
-                                        }`}
-                                    >
+                                    <button key={item.id} onClick={() => setMenu(item.id)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-sm transition ${ menu === item.id ? "bg-orange-500 text-white" : "text-gray-600 hover:bg-orange-50 hover:text-orange-500"}`}>
                                         {item.icon}
                                         <span>{item.name}</span>
                                     </button>
@@ -190,60 +182,36 @@ function AdminDashboard() {
                         )}
                     </div>
 
-                    <button
-                        onClick={() => setMenu("footer")}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
-                            menu === "footer"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
+                    <button onClick={() => setMenu("footer")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
+                            menu === "footer" ? "bg-orange-500 text-white shadow-sm" : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
                         }`}
                     >
                         <FiFileText size={20} />
                         <span className="font-medium">Footer</span>
                     </button>
 
-                    <button
-                        onClick={() => setMenu("users")}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
-                            menu === "users"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
-                        }`}
-                    >
+                    <button onClick={() => setMenu("users")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${ menu === "users" ? "bg-orange-500 text-white shadow-sm" : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"}`}>
                         <FiUsers size={20} />
                         <span className="font-medium">Users</span>
                     </button>
 
-                    <button
-                        onClick={() => setMenu("pages")}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
-                            menu === "pages"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
+                    <button onClick={() => setMenu("pages")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${  menu === "pages" ? "bg-orange-500 text-white shadow-sm" : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
                         }`}
                     >
                         <FiFileText size={20} />
                         <span className="font-medium">Pages</span>
                     </button>
 
-                    <button
-                        onClick={() => setMenu("contact")}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
-                            menu === "contact"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
+                    <button onClick={() => setMenu("contact")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
+                            menu === "contact" ? "bg-orange-500 text-white shadow-sm" : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
                         }`}
                     >
                         <FiMail size={20} />
                         <span className="font-medium">Contact</span>
                     </button>
 
-                    <button
-                        onClick={() => setMenu("CaseStudy")}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
-                            menu === "CaseStudy"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
+                    <button onClick={() => setMenu("CaseStudy")} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition ${
+                            menu === "CaseStudy" ? "bg-orange-500 text-white shadow-sm" : "text-gray-700 hover:bg-orange-50 hover:text-orange-500"
                         }`}
                     >
                         <FiBookOpen size={20} />
@@ -251,10 +219,7 @@ function AdminDashboard() {
                     </button>
 
                     <div className="pt-4 mt-4 border-t border-gray-200">
-                        <button
-                            onClick={handleLogout}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-red-600 hover:bg-red-50 transition"
-                        >
+                        <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left text-red-600 hover:bg-red-50 transition">
                             <FiLogOut size={20} />
                             <span className="font-medium">Logout</span>
                         </button>

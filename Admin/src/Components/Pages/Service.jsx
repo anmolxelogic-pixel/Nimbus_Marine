@@ -1,14 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
-import {
-    FaUsers,
-    FaGraduationCap,
-    FaFileAlt,
-    FaPlane,
-    FaHandshake,
-    FaAnchor,
-} from "react-icons/fa";
+import { FaUsers, FaGraduationCap, FaFileAlt, FaPlane, FaHandshake, FaAnchor} from "react-icons/fa";
 
 import { GiCargoShip } from "react-icons/gi";
 
@@ -54,31 +47,19 @@ function Service() {
 
             const response = await axios.get(API_URL);
 
-            console.log(
-                "Services:",
-                response.data
-            );
-
             setServices(response.data);
 
         } catch (error) {
 
-            console.error(
-                "Error fetching services:",
-                error
-            );
-
+            console.error("Error fetching services:", error);
             alert("Failed to load services");
-
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-
         fetchServices();
-
     }, []);
 
 
@@ -97,19 +78,8 @@ function Service() {
 
 
         return services.filter((service) => {
-
             return (
-
-                service.title
-                    ?.toLowerCase()
-                    .includes(value)
-
-                ||
-
-                service.description
-                    ?.toLowerCase()
-                    .includes(value)
-
+                service.title?.toLowerCase().includes(value) || service.description?.toLowerCase().includes(value)
             );
 
         });
@@ -121,11 +91,7 @@ function Service() {
 
         setEditingService(null);
 
-        setFormData({
-            title: "",
-            description: "",
-            icon: "",
-        });
+        setFormData({ title: "", description: "", icon: ""});
 
         setShowModal(true);
 
@@ -137,23 +103,12 @@ function Service() {
 
         setFormData({
 
-            title: service.title || "",
-
-            description:
-                service.description || "",
-
-            icon: service.icon || "",
-
+            title: service.title || "", description: service.description || "", icon: service.icon || "",
         });
 
         setShowModal(true);
 
     };
-
-
-    // ==================================================
-    // CLOSE MODAL
-    // ==================================================
 
     const handleCloseModal = () => {
 
@@ -161,11 +116,7 @@ function Service() {
 
         setEditingService(null);
 
-        setFormData({
-            title: "",
-            description: "",
-            icon: "",
-        });
+        setFormData({title: "",description: "",icon: ""});
 
     };
 
@@ -196,36 +147,27 @@ function Service() {
                     `${API_URL}/${editingService.id}`,
 
                     {
-                        title:
-                            formData.title.trim(),
+                        title:formData.title.trim(),
 
-                        description:
-                            formData.description.trim(),
+                        description:formData.description.trim(),
 
-                        icon:
-                            formData.icon || null,
+                        icon:formData.icon || null,
                     }
 
                 );
-                console.log("Update response:",response.data);
                 alert("Service updated successfully!");
             }
             else {
                 const response = await axios.post(
                     API_URL,
                     {
-                        title:
-                            formData.title.trim(),
-                        description:
-                            formData.description.trim(),
-                        icon:
-                            formData.icon || null,
+                        title:formData.title.trim(),
+                        description:formData.description.trim(),
+                        icon:formData.icon || null,
                     }
                 );
-                console.log("Add response:",response.data);
                 alert("Service added successfully!");
             }
-
             handleCloseModal();
             await fetchServices();
         } catch (error) {
@@ -237,20 +179,16 @@ function Service() {
     const handleDelete = async (id) => {
         const service =
             services.find(
-                (item) =>
-                    item.id === id
-            );
+                (item) => item.id === id);
         const confirmed =
-            window.confirm(  `Are you sure you want to delete "${service?.title}"?`);
+            window.confirm(`Are you sure you want to delete "${service?.title}"?`);
 
         if (!confirmed) {
             return;
         }
 
         try {
-            await axios.delete(
-                `${API_URL}/${id}`
-            );
+            await axios.delete(`${API_URL}/${id}`);
             alert("Service deleted successfully!");
             await fetchServices();
         } catch (error) {
@@ -270,7 +208,6 @@ function Service() {
 
         );
     }
-
 
     return (
 
@@ -312,7 +249,7 @@ function Service() {
                         <button onClick={handleAddService} className="rounded-lg bg-slate-900 px-4 py-2.5  text-sm  font-medium  text-white  transition hover:bg-slate-800">+ Add New Service</button>
                     </div>
 
-                     {/* serach box */}
+                    
                     <div className="border-b border-slate-200 p-4 ">
                         {/* <input type="text" placeholder="Search services..." value={search} onChange={(e) =>setSearch(e.target.value)}
                             className=" w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-slate-400 focus:bg-white"/> */}
@@ -393,7 +330,6 @@ function Service() {
             </div>
 
             {showModal && (
-
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
                     <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl">
                         <div
@@ -438,7 +374,7 @@ function Service() {
                                 </select>
                             </div>
 
-                            <div className="flexjustify-end gap-3 border-t border-slate-200pt-5">
+                            <div className="flex justify-end gap-3 py-2 border-t border-slate-200pt-5">
                                 <button type="button" onClick={handleCloseModal} className="  rounded-lg border border-slate-200 px-5 py-2.5 text-sm font-medium  text-slate-600  hover:bg-slate-50 " >Cancel</button>
                                 <button  type="submit"  className="  rounded-lg  bg-slate-900  px-5  py-2.5  text-sm font-medium text-white  hover:bg-slate-800">
                                     {editingService  ? "Update Service" : "Create Service"}

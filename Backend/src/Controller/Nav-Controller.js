@@ -85,9 +85,9 @@ const updateNav = async (req, res) => {
 
         let { menu_items, is_active } = req.body;
 
-        console.log("ID:", id);
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
+        // console.log("ID:", id);
+        // console.log("BODY:", req.body);
+        // console.log("FILE:", req.file);
 
         if (menu_items === undefined) {
             return res.status(400).json({

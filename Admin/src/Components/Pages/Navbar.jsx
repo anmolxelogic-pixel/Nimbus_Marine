@@ -38,11 +38,7 @@ function Navbar() {
 
             setNavbarId(Number(data.id));
 
-            setMenuItems(
-                Array.isArray(data.menu_items)
-                    ? data.menu_items
-                    : []
-            );
+            setMenuItems(Array.isArray(data.menu_items) ? data.menu_items : []);
 
             if (data.logo) {
                 setLogoPreview(
@@ -55,11 +51,7 @@ function Navbar() {
             }
         } catch (error) {
             console.error("Fetch navbar error:", error);
-            toast.error(
-                error.response?.data?.message ||
-                error.message ||
-                "Failed to load navbar"
-            );
+            toast.error("Failed to load navbar");
         } finally {
             setLoading(false);
         }
@@ -74,11 +66,7 @@ function Navbar() {
 
         if (!file) return;
 
-        const allowedTypes = [
-            "image/png",
-            "image/jpeg",
-            "image/webp",
-        ];
+        const allowedTypes = ["image/png","image/jpeg","image/webp"];
 
         if (!allowedTypes.includes(file.type)) {
             toast.error("Only PNG, JPG and WEBP files are allowed");
@@ -157,12 +145,7 @@ function Navbar() {
         );
     };
 
-    const updateSubItem = (
-        menuIndex,
-        subIndex,
-        field,
-        value
-    ) => {
+    const updateSubItem = (menuIndex,subIndex,field, value) => {
         setMenuItems((prev) =>
             prev.map((item, index) =>
                 index === menuIndex
@@ -201,46 +184,28 @@ function Navbar() {
 
             const formData = new FormData();
 
-            formData.append(
-                "menu_items",
-                JSON.stringify(menuItems)
-            );
+            formData.append("menu_items",JSON.stringify(menuItems));
 
             formData.append("is_active", "true");
 
             if (logo instanceof File) {
                 formData.append("logo", logo);
             }
-
-            console.log("UPDATE URL:", `${API_URL}/${navbarId}`);
+            // console.log("UPDATE URL:", `${API_URL}/${navbarId}`);
 
             for (const [key, value] of formData.entries()) {
-                console.log(key, value);
+                // console.log(key, value);
             }
 
-            const response = await axios.put(
-                `${API_URL}/${navbarId}`,
-                formData
-            );
+            const response = await axios.put(`${API_URL}/${navbarId}`,formData);
 
-            toast.success(
-                response.data?.message ||
-                "Navbar updated successfully"
-            );
-
+            toast.success("Navbar updated successfully");
+            alert("Navbar updated successfully");
             setLogo(null);
             await fetchNavbar();
         } catch (error) {
             console.error("Save navbar error:", error);
-            console.error(
-                "Server response:",
-                error.response?.data
-            );
-
-            toast.error(
-                error.response?.data?.message ||
-                "Failed to update navbar"
-            );
+            toast.error("Failed to update navbar");
         } finally {
             setSaving(false);
         }
@@ -283,15 +248,9 @@ function Navbar() {
                         <div className="flex items-center gap-6">
                             <div className="w-52 h-28 rounded-lg border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden">
                                 {logoPreview ? (
-                                    <img
-                                        src={logoPreview}
-                                        alt="Navbar Logo"
-                                        className="max-w-full max-h-full object-contain"
-                                    />
+                                    <img src={logoPreview} alt="Navbar Logo" className="max-w-full max-h-full object-contain"/>
                                 ) : (
-                                    <span className="text-sm text-gray-400">
-                                        No logo
-                                    </span>
+                                    <span className="text-sm text-gray-400">No logo</span>
                                 )}
                             </div>
 
@@ -301,17 +260,11 @@ function Navbar() {
                                         Upload Logo
                                     </span>
 
-                                    <input
-                                        type="file"
-                                        accept="image/png,image/jpeg,image/webp"
-                                        className="hidden"
-                                        onChange={handleLogoChange}
-                                    />
+                                    <input type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={handleLogoChange}/>
+
                                 </label>
 
-                                <p className="text-xs text-gray-400 mt-2">
-                                    PNG, JPG or WEBP
-                                </p>
+                                <p className="text-xs text-gray-400 mt-2"> PNG, JPG or WEBP </p>
                             </div>
                         </div>
                     </div>
@@ -322,16 +275,10 @@ function Navbar() {
                                 <h2 className="text-xl font-semibold text-gray-800">
                                     Navigation Menu
                                 </h2>
-                                <p className="text-sm text-gray-500 mt-1">
-                                    Create menus and dropdown submenus.
-                                </p>
+                                <p className="text-sm text-gray-500 mt-1"> Create menus and dropdown submenus. </p>
                             </div>
 
-                            <button
-                                type="button"
-                                onClick={addMenuItem}
-                                className="bg-gray-900 text-white px-5 py-3 rounded-lg"
-                            >
+                            <button type="button" onClick={addMenuItem} className="bg-gray-900 text-white px-5 py-3 rounded-lg">
                                 + Add Menu
                             </button>
                         </div>
@@ -342,11 +289,7 @@ function Navbar() {
                                     No menu items yet.
                                 </p>
 
-                                <button
-                                    type="button"
-                                    onClick={addMenuItem}
-                                    className="mt-3 text-orange-500 font-semibold"
-                                >
+                                <button type="button" onClick={addMenuItem} className="mt-3 text-orange-500 font-semibold">
                                     + Add your first menu
                                 </button>
                             </div>
@@ -354,10 +297,7 @@ function Navbar() {
 
                         <div className="space-y-5">
                             {menuItems.map((item, menuIndex) => (
-                                <div
-                                    key={menuIndex}
-                                    className="border border-gray-200 rounded-xl overflow-hidden"
-                                >
+                                <div key={menuIndex} className="border border-gray-200 rounded-xl overflow-hidden">
                                     <div className="bg-gray-50 px-5 py-4 flex items-center justify-between">
                                         <div>
                                             <p className="font-semibold text-gray-800">
@@ -365,19 +305,11 @@ function Navbar() {
                                             </p>
 
                                             <p className="text-xs text-gray-500">
-                                                {item.type === "dropdown"
-                                                    ? "Dropdown menu"
-                                                    : "Link"}
+                                                {item.type === "dropdown" ? "Dropdown menu" : "Link"}
                                             </p>
                                         </div>
 
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                removeMenuItem(menuIndex)
-                                            }
-                                            className="text-red-500"
-                                        >
+                                        <button type="button" onClick={() => removeMenuItem(menuIndex)} className="text-red-500">
                                             Delete
                                         </button>
                                     </div>
@@ -501,37 +433,14 @@ function Navbar() {
                                                                         className="w-full border border-gray-300 rounded-lg px-3 py-2.5"
                                                                     />
 
-                                                                    <input
-                                                                        type="text"
-                                                                        value={
-                                                                            subItem.link ||
-                                                                            ""
-                                                                        }
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            updateSubItem(
-                                                                                menuIndex,
-                                                                                subIndex,
-                                                                                "link",
-                                                                                e.target.value
-                                                                            )
-                                                                        }
+                                                                    <input type="text" value={ subItem.link || ""}
+                                                                        onChange={(e) =>updateSubItem(menuIndex,subIndex,"link",e.target.value)}
                                                                         placeholder="/services/example"
                                                                         className="w-full border border-gray-300 rounded-lg px-3 py-2.5"
                                                                     />
                                                                 </div>
 
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() =>
-                                                                        removeSubItem(
-                                                                            menuIndex,
-                                                                            subIndex
-                                                                        )
-                                                                    }
-                                                                    className="mt-3 text-red-500"
-                                                                >
+                                                                <button type="button" onClick={() => removeSubItem(menuIndex,subIndex)} className="mt-3 text-red-500">
                                                                     Delete
                                                                 </button>
                                                             </div>
@@ -546,21 +455,13 @@ function Navbar() {
                         </div>
 
                         {menuItems.length > 0 && (
-                            <button
-                                type="button"
-                                onClick={addMenuItem}
-                                className="w-full mt-5 border-2 border-dashed border-gray-200 rounded-xl py-4"
-                            >
+                            <button type="button" onClick={addMenuItem} className="w-full mt-5 border-2 border-dashed border-gray-200 rounded-xl py-4">
                                 + Add Another Menu
                             </button>
                         )}
 
                         <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
-                            <button
-                                type="submit"
-                                disabled={saving || !navbarId}
-                                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50"
-                            >
+                            <button type="submit" disabled={saving || !navbarId} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50">
                                 {saving ? "Saving..." : "Save Navbar"}
                             </button>
                         </div>
